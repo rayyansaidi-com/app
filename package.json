@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "version": "0.1.0",
+  "version": "3.0.0",
   "private": true,
   "homepage": "./",
   "dependencies": {
@@ -12,7 +12,7 @@
     "react-scripts": "3.4.3"
   },
   "scripts": {
-    "start": "run-p react:start electron-start",
+    "start": "run-p react:start electron:start",
     "start:prod": "run-s build electron:start:prod",
     "electron:start": "sleep 5 && NODE_ENV=development electron .",
     "electron:start:prod": "NODE_ENV=production electron .",
@@ -20,8 +20,8 @@
     "react:build": "react-scripts build",
     "react:test": "react-scripts test",
     "react:eject": "react-scripts eject",
-    "lint": "yarn eslint .",
-    "lint:fix": "yarn eslint . --fix"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "eslintConfig": {
     "extends": "react-app"
