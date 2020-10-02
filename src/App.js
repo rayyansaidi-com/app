@@ -109,7 +109,7 @@ export default () => {
     }
   })
   class Content extends React.Component {
-    render () {
+    render() {
       return (
         <div
           id={this.props.id}
@@ -138,7 +138,7 @@ export default () => {
             onClick={
               this.props.previous !== 'disabled'
                 ? this.props.previous
-                : () => {}
+                : () => { }
             }
           >
             Previous
@@ -148,7 +148,7 @@ export default () => {
             color="primary"
             disabled={this.props.next === 'disabled'}
             onClick={
-              this.props.next !== 'disabled' ? this.props.next : () => {}
+              this.props.next !== 'disabled' ? this.props.next : () => { }
             }
             className={classes.next}
           >
@@ -296,15 +296,15 @@ export default () => {
           previous="disabled"
           next={sidebarFavoriteClick}
         >
-          To start off, my name is Rayyan Saidi. I am a small 10-year-old boy
-          that lives in PA. Below is a picture of me. I am going into 6th grade
-          at Dorseyville Middle School in August. I have great parents named
+          To start off, my name is Rayyan Saidi. I am a 11-year-old boy
+          that lives in PA. Around this text is a picture of me. I am in 6th grade
+          at Dorseyville Middle School. I have great parents named
           Rakie Cham and Wissam Saidi, a grandma name Salame Cham, and a
-          wonderful sister named Salam Saidi. I spent the beginning of 2020 in a
+          wonderful sister named Salam Saidi. I spent all of 2020 in a
           dangerous pandemic that was one of the worst ones in history. That
           time was difficult because everything was closed, and families were
           struggling to get food and water. Luckily, my family was able to get
-          the food and water we needed because both of my parents had jobs.
+          the food and water we needed because both of my parents still had jobs.
         </Content>
         <Content
           id="favorite"
