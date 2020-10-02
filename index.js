@@ -2,13 +2,31 @@ const { app, BrowserWindow } = require('electron')
 
 function createWindow () {
   // Create the browser window.
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      nodeIntegration: true
-    }
-  })
+  const win = process.platform === 'darwin'
+    ? new BrowserWindow({
+      width: 1000,
+      height: 800,
+      webPreferences: {
+        nodeIntegration: true,
+        worldSafeExecuteJavaScript: true,
+        contextIsolation: true
+      },
+      minHeight: 400,
+      minWidth: 600,
+      frame: false,
+      titleBarStyle: 'hiddenInset'
+    })
+    : new BrowserWindow({
+      width: 1000,
+      height: 800,
+      webPreferences: {
+        nodeIntegration: true,
+        worldSafeExecuteJavaScript: true,
+        contextIsolation: true
+      },
+      minHeight: 400,
+      minWidth: 600
+    })
 
   // and load the index.html of the app.
   process.env.NODE_ENV === 'development' ? win.loadURL('http://localhost:3000') : win.loadFile('build/index.html')
