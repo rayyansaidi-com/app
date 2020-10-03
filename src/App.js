@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {
   makeStyles,
   createMuiTheme,
@@ -31,6 +31,7 @@ import CakeIcon from '@material-ui/icons/Cake'
 import FaceIcon from '@material-ui/icons/Face'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import CardGiftcardIcon from '@material-ui/icons/CardGiftcard'
+import AppsIcon from '@material-ui/icons/Apps'
 import green from '@material-ui/core/colors/green'
 import yellow from '@material-ui/core/colors/yellow'
 
@@ -97,6 +98,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+const classes = useStyles()
+const theme = createMuiTheme({
+  palette: {
+    primary: green,
+    secondary: yellow
+  }
+})
+
 const listSidebarItem = (text, icon, onclick) => {
   return (
     <ListItem onClick={onclick} button key={text}>
@@ -106,109 +115,106 @@ const listSidebarItem = (text, icon, onclick) => {
   )
 }
 
-export default () => {
-  const classes = useStyles()
-  const theme = createMuiTheme({
-    palette: {
-      primary: green,
-      secondary: yellow
-    }
-  })
-  class Content extends React.Component {
-    render() {
-      return (
-        <div
-          id={this.props.id}
-          className={classes.content}
-          style={{ display: this.props.display || 'none' }}
+class Content extends Component {
+  render() {
+    const classes = useStyles()
+    return (
+      <div
+        id={this.props.id}
+        className={classes.content}
+        style={{ display: this.props.display || 'none' }}
+      >
+        <Toolbar />
+        <Typography className={classes.h3} variant="h3">
+          {this.props.title}
+        </Typography>
+        <br />
+        {this.props.image ? (
+          <img
+            alt=""
+            src={this.props.image}
+            className={classes.inlineImage}
+          />
+        ) : null}
+        <Typography paragraph className={classes.paragraph}>
+          {this.props.children}
+        </Typography>
+        <Button
+          variant="contained"
+          color="secondary"
+          disabled={this.props.previous === 'disabled'}
+          onClick={
+            this.props.previous !== 'disabled'
+              ? this.props.previous
+              : () => { }
+          }
         >
-          <Toolbar />
-          <Typography className={classes.h3} variant="h3">
-            {this.props.title}
-          </Typography>
-          <br />
-          {this.props.image ? (
-            <img
-              alt=""
-              src={this.props.image}
-              className={classes.inlineImage}
-            />
-          ) : null}
-          <Typography paragraph className={classes.paragraph}>
-            {this.props.children}
-          </Typography>
-          <Button
-            variant="contained"
-            color="secondary"
-            disabled={this.props.previous === 'disabled'}
-            onClick={
-              this.props.previous !== 'disabled'
-                ? this.props.previous
-                : () => { }
-            }
-          >
-            Previous
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            disabled={this.props.next === 'disabled'}
-            onClick={
-              this.props.next !== 'disabled' ? this.props.next : () => { }
-            }
-            className={classes.next}
-          >
-            Next
-          </Button>
-        </div>
-      )
-    }
+          Previous
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          disabled={this.props.next === 'disabled'}
+          onClick={
+            this.props.next !== 'disabled' ? this.props.next : () => { }
+          }
+          className={classes.next}
+        >
+          Next
+        </Button>
+      </div>
+    )
   }
-  const handleClick = (string) => {
-    document.getElementById('intro').style.display = 'none'
-    document.getElementById('favorite').style.display = 'none'
-    document.getElementById('pictures').style.display = 'none'
-    document.getElementById('family').style.display = 'none'
-    document.getElementById('treasure').style.display = 'none'
-    document.getElementById('holiday').style.display = 'none'
-    document.getElementById('birthday').style.display = 'none'
-    document.getElementById('father').style.display = 'none'
-    document.getElementById('mother').style.display = 'none'
-    document.getElementById('valentine').style.display = 'none'
-    document.getElementById(string).style.display = 'block'
-  }
+}
 
-  const sidebarIntroClick = () => {
-    handleClick('intro')
-  }
-  const sidebarFavoriteClick = () => {
-    handleClick('favorite')
-  }
-  const sidebarPicturesClick = () => {
-    handleClick('pictures')
-  }
-  const sidebarFamilyClick = () => {
-    handleClick('family')
-  }
-  const sidebarTreasureClick = () => {
-    handleClick('family')
-  }
-  const sidebarHolidayClick = () => {
-    handleClick('holiday')
-  }
-  const sidebarBirthdayClick = () => {
-    handleClick('birthday')
-  }
-  const sidebarFatherClick = () => {
-    handleClick('father')
-  }
-  const sidebarMotherClick = () => {
-    handleClick('mother')
-  }
-  const sidebarValentineClick = () => {
-    handleClick('valentine')
-  }
 
+function handleClick(string) {
+  document.getElementById('intro').style.display = 'none'
+  document.getElementById('favorite').style.display = 'none'
+  document.getElementById('pictures').style.display = 'none'
+  document.getElementById('family').style.display = 'none'
+  document.getElementById('treasure').style.display = 'none'
+  document.getElementById('holiday').style.display = 'none'
+  document.getElementById('birthday').style.display = 'none'
+  document.getElementById('father').style.display = 'none'
+  document.getElementById('mother').style.display = 'none'
+  document.getElementById('valentine').style.display = 'none'
+  document.getElementById(string).style.display = 'block'
+}
+
+function sidebarIntroClick() {
+  handleClick('intro')
+}
+function sidebarFavoriteClick() {
+  handleClick('favorite')
+}
+function sidebarPicturesClick() {
+  handleClick('pictures')
+}
+function sidebarFamilyClick() {
+  handleClick('family')
+}
+function sidebarTreasureClick() {
+  handleClick('family')
+}
+function sidebarHolidayClick() {
+  handleClick('holiday')
+}
+function sidebarBirthdayClick() {
+  handleClick('birthday')
+}
+function sidebarFatherClick() {
+  handleClick('father')
+}
+function sidebarMotherClick() {
+  handleClick('mother')
+}
+function sidebarValentineClick() {
+  handleClick('valentine')
+}
+
+export default class App extends Component {
+  render() {
   return (
     <div className={classes.root}>
       <MuiThemeProvider theme={theme}>
@@ -231,67 +237,22 @@ export default () => {
           <div className={classes.drawerContainer}>
             <Divider />
             <Typography noWrap className={classes.sidebarHeader}>
-              Home
+              Current Projects
             </Typography>
             <Divider />
             <List>
               {listSidebarItem('Introduction', <BookIcon />, sidebarIntroClick)}
               {listSidebarItem(
-                'Favorite things to do outside of school',
+                'RS Office',
                 <HomeWorkIcon />,
                 sidebarFavoriteClick
               )}
               {listSidebarItem(
-                'Pictures of Family Members',
-                <ImageIcon />,
+                'Rayyan Saidi Desktop',
+                <AppsIcon />,
                 sidebarPicturesClick
               )}
-              {listSidebarItem(
-                'Family Details',
-                <FamilyIcon />,
-                sidebarFamilyClick
-              )}
             </List>
-            {/* <Divider />
-            <Typography noWrap className={classes.sidebarHeader}>
-              Games
-            </Typography>
-            <Divider />
-            <List>
-              {listSidebarItem(
-                'Treasure Hunt',
-                <EsportsIcon />,
-                sidebarTreasureClick
-              )}
-            </List>
-            <Divider />
-            <Typography noWrap className={classes.sidebarHeader}>
-              Holiday Templates
-            </Typography>
-            <Divider />
-            <List>
-              {listSidebarItem(
-                'About',
-                <CardGiftcardIcon />,
-                sidebarHolidayClick
-              )}
-              {listSidebarItem('Birthday', <CakeIcon />, sidebarBirthdayClick)}
-              {listSidebarItem(
-                "Father's day",
-                <FaceIcon />,
-                sidebarFatherClick
-              )}
-              {listSidebarItem(
-                "Mother's day",
-                <FaceIcon />,
-                sidebarMotherClick
-              )}
-              {listSidebarItem(
-                "Valentine's day",
-                <FavoriteIcon />,
-                sidebarValentineClick
-              )}
-            </List> */}
           </div>
         </Drawer>
         <Content
@@ -302,15 +263,7 @@ export default () => {
           previous="disabled"
           next={sidebarFavoriteClick}
         >
-          To start off, my name is Rayyan Saidi. I am a 11-year-old boy
-          that lives in PA. Around this text is a picture of me. I am in 6th grade
-          at Dorseyville Middle School. I have great parents named
-          Rakie Cham and Wissam Saidi, a grandma name Salame Cham, and a
-          wonderful sister named Salam Saidi. I spent all of 2020 in a
-          dangerous pandemic that was one of the worst ones in history. That
-          time was difficult because everything was closed, and families were
-          struggling to get food and water. Luckily, my family was able to get
-          the food and water we needed because both of my parents still had jobs.
+          
         </Content>
         <Content
           id="favorite"
@@ -318,16 +271,7 @@ export default () => {
           previous={sidebarIntroClick}
           next={sidebarPicturesClick}
         >
-          1. Electronics
-          <br />
-          2. Coding
-          <br />
-          3. Resting and Reading
-          <br />
-          4. Playing chess with my sister
-          <br />
-          5. Meeting with friends
-          <br />
+          
         </Content>
         <Content
           id="pictures"
@@ -335,41 +279,7 @@ export default () => {
           previous={sidebarFavoriteClick}
           next={sidebarFamilyClick}
         >
-          <img alt="Rayyan Saidi" className={classes.image} src={rayyan} />
-          <br />
-          Rayyan Saidi
-          <br /><br />
-          <img alt="Salam Saidi" className={classes.image} src={salam} />
-          <br />
-          Salam Saidi
-          <br /><br />
-          <img alt="Wissam Saidi" className={classes.image} src={wissam} />
-          <br />
-          Wissam Saidi
-          <br /><br />
-          <img alt="Rakie Cham" className={classes.image} src={rakie} />
-          <br />
-          Rakie Cham
-          <br /><br />
-          <img alt="Salame Cham" className={classes.image} src={salame} />
-          <br />
-          Salame Cham
-          <br /><br />
-          <img
-            alt="Cousins in Orlando, Florida"
-            className={classes.image}
-            src={orlando}
-          />
-          <br />
-          Cousins in Orlando, Florida
-          <br /><br />
-          <img
-            alt="Cousins in Boynton Beach, Florida"
-            className={classes.image}
-            src={south}
-          />
-          <br />
-          Cousins in Boynton Beach, Florida
+
         </Content>
         <Content
           id="family"
@@ -377,52 +287,7 @@ export default () => {
           previous={sidebarPicturesClick}
           next="disabled"
         >
-          <b>Rayyan Saidi</b>
-          <ul>
-            <li>10 years old</li>
-            <li>
-              Person who made this app and{' '}
-              <a href="https://rayyansaidi.com">rayyansaidi.com</a>
-            </li>
-            <li>Oldest kid in my house</li>
-            <li>Going into 6th grade</li>
-          </ul>
-          <b>My sister</b>
-          <ul>
-            <li>8 years old</li>
-            <li>
-              Creater of <a href="https://salamsaidi.com">salamsaidi.com</a>
-            </li>
-            <li>Youngest kid of my house</li>
-            <li>Going into 4th grade</li>
-          </ul>
-          <b>My dad</b>
-          <ul>
-            <li>
-              Principle of the{' '}
-              <a href="http://saidigroup.pitt.edu">Saidi Reasearch Group</a>
-            </li>
-            <li>Mine and Salam&apos;s father</li>
-            <li>Works as a machanical Engener</li>
-          </ul>
-          <b>My mom</b>
-          <ul>
-            <li>
-              Part of the faculaty of{' '}
-              <a href="https://www.engineering.pitt.edu/Sub-Sites/Labs/HMBL/Content/About-Us/">
-                SSOE
-              </a>
-            </li>
-            <li>Mine and Salam&apos;s mother</li>
-            <li>Works as a Bio Engener</li>
-          </ul>
-          <b>Salame Cham</b>
-          <ul>
-            <li>A wonderfull cook</li>
-            <li>Mine and Salam&apos;s Grandma</li>
-            <li>Great Knitter</li>
-            <li>Best Grandma ever</li>
-          </ul>
+        
         </Content>
         <Content id="treasure"></Content>
         <Content id="holiday"></Content>
@@ -433,4 +298,5 @@ export default () => {
       </MuiThemeProvider>
     </div>
   )
+  }
 }
