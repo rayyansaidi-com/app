@@ -98,14 +98,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const classes = useStyles()
-const theme = createMuiTheme({
-  palette: {
-    primary: green,
-    secondary: yellow
-  }
-})
-
 const listSidebarItem = (text, icon, onclick) => {
   return (
     <ListItem onClick={onclick} button key={text}>
@@ -115,37 +107,36 @@ const listSidebarItem = (text, icon, onclick) => {
   )
 }
 
-class Content extends Component {
-  render() {
+const Content = (props) => {
     const classes = useStyles()
     return (
       <div
-        id={this.props.id}
+        id={props.id}
         className={classes.content}
-        style={{ display: this.props.display || 'none' }}
+        style={{ display: props.display || 'none' }}
       >
         <Toolbar />
         <Typography className={classes.h3} variant="h3">
-          {this.props.title}
+          {props.title}
         </Typography>
         <br />
-        {this.props.image ? (
+        {props.image ? (
           <img
             alt=""
-            src={this.props.image}
+            src={props.image}
             className={classes.inlineImage}
           />
         ) : null}
         <Typography paragraph className={classes.paragraph}>
-          {this.props.children}
+          {props.children}
         </Typography>
         <Button
           variant="contained"
           color="secondary"
-          disabled={this.props.previous === 'disabled'}
+          disabled={props.previous === 'disabled'}
           onClick={
-            this.props.previous !== 'disabled'
-              ? this.props.previous
+            props.previous !== 'disabled'
+              ? props.previous
               : () => { }
           }
         >
@@ -154,9 +145,9 @@ class Content extends Component {
         <Button
           variant="contained"
           color="primary"
-          disabled={this.props.next === 'disabled'}
+          disabled={props.next === 'disabled'}
           onClick={
-            this.props.next !== 'disabled' ? this.props.next : () => { }
+            props.next !== 'disabled' ? props.next : () => { }
           }
           className={classes.next}
         >
@@ -165,7 +156,6 @@ class Content extends Component {
       </div>
     )
   }
-}
 
 
 function handleClick(string) {
@@ -213,8 +203,14 @@ function sidebarValentineClick() {
   handleClick('valentine')
 }
 
-export default class App extends Component {
-  render() {
+export default () => {
+  const classes = useStyles()
+  const theme = createMuiTheme({
+    palette: {
+      primary: green,
+      secondary: yellow
+    }
+  })
   return (
     <div className={classes.root}>
       <MuiThemeProvider theme={theme}>
@@ -298,5 +294,4 @@ export default class App extends Component {
       </MuiThemeProvider>
     </div>
   )
-  }
 }
