@@ -1,6 +1,7 @@
 {
-  "name": "app",
+  "name": "rayyansaidi-desktop",
   "version": "3.0.0-dev",
+  "main": "index.js",
   "private": true,
   "homepage": "./",
   "dependencies": {
@@ -43,6 +44,7 @@
   },
   "devDependencies": {
     "electron": "^10.1.3",
+    "electron-builder": "^22.8.1",
     "eslint": "^7.10.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.1",
@@ -51,5 +53,6 @@
     "eslint-plugin-react": "^7.21.2",
     "eslint-plugin-standard": "^4.0.1",
     "npm-run-all": "^4.1.5"
-  }
+  },
+  "productName": "Rayyan Saidi Desktop"
 }

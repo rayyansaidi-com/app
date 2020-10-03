@@ -12,7 +12,7 @@ function createWindow () {
         contextIsolation: true
       },
       minHeight: 400,
-      minWidth: 730,
+      minWidth: 700,
       frame: false,
       titleBarStyle: 'hiddenInset'
     })
@@ -25,7 +25,7 @@ function createWindow () {
         contextIsolation: true
       },
       minHeight: 400,
-      minWidth: 730
+      minWidth: 700
     })
 
   // and load the index.html of the app.

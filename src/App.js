@@ -34,7 +34,7 @@ import CardGiftcardIcon from '@material-ui/icons/CardGiftcard'
 import green from '@material-ui/core/colors/green'
 import yellow from '@material-ui/core/colors/yellow'
 
-const drawerWidth = 240
+const drawerWidth = 250
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -82,12 +82,18 @@ const useStyles = makeStyles((theme) => ({
   },
   inlineImage: {
     float: 'left',
-    margin: 20
+    margin: 20,
+    width: 550,
+    maxWidth: `calc(100vw - ${drawerWidth + 100}px)`
   },
   paragraph: {
     margin: 20,
     marginTop: 25,
     fontSize: 18
+  },
+  image: {
+    width: 550,
+    maxWidth: `calc(100vw - ${drawerWidth + 100}px)`
   }
 }))
 
@@ -246,7 +252,7 @@ export default () => {
                 sidebarFamilyClick
               )}
             </List>
-            <Divider />
+            {/* <Divider />
             <Typography noWrap className={classes.sidebarHeader}>
               Games
             </Typography>
@@ -285,7 +291,7 @@ export default () => {
                 <FavoriteIcon />,
                 sidebarValentineClick
               )}
-            </List>
+            </List> */}
           </div>
         </Drawer>
         <Content
@@ -330,32 +336,39 @@ export default () => {
           next={sidebarFamilyClick}
         >
           <img alt="Rayyan Saidi" className={classes.image} src={rayyan} />
+          <br />
           Rayyan Saidi
-          <br />
+          <br /><br />
           <img alt="Salam Saidi" className={classes.image} src={salam} />
+          <br />
           Salam Saidi
-          <br />
+          <br /><br />
           <img alt="Wissam Saidi" className={classes.image} src={wissam} />
+          <br />
           Wissam Saidi
-          <br />
+          <br /><br />
           <img alt="Rakie Cham" className={classes.image} src={rakie} />
+          <br />
           Rakie Cham
-          <br />
+          <br /><br />
           <img alt="Salame Cham" className={classes.image} src={salame} />
-          Salame Cham
           <br />
+          Salame Cham
+          <br /><br />
           <img
             alt="Cousins in Orlando, Florida"
             className={classes.image}
             src={orlando}
           />
-          Cousins in Orlando, Florida
           <br />
+          Cousins in Orlando, Florida
+          <br /><br />
           <img
             alt="Cousins in Boynton Beach, Florida"
             className={classes.image}
             src={south}
           />
+          <br />
           Cousins in Boynton Beach, Florida
         </Content>
         <Content
