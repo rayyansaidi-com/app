@@ -1,16 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {
   makeStyles,
   createMuiTheme,
   MuiThemeProvider
 } from '@material-ui/core/styles'
-import rayyan from './images/rayyan.jpg'
-import salam from './images/salam.jpg'
-import wissam from './images/wissam.jpg'
-import rakie from './images/rakie.jpg'
-import salame from './images/salame.jpg'
-import orlando from './images/orlando.jpeg'
-import south from './images/south.jpeg'
 import Drawer from '@material-ui/core/Drawer'
 import AppBar from '@material-ui/core/AppBar'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -22,19 +15,55 @@ import Divider from '@material-ui/core/Divider'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import BookIcon from '@material-ui/icons/Book'
-import HomeWorkIcon from '@material-ui/icons/HomeWork'
-import ImageIcon from '@material-ui/icons/Image'
-import FamilyIcon from '@material-ui/icons/SupervisorAccount'
-import EsportsIcon from '@material-ui/icons/SportsEsports'
-import CakeIcon from '@material-ui/icons/Cake'
-import FaceIcon from '@material-ui/icons/Face'
-import FavoriteIcon from '@material-ui/icons/Favorite'
-import CardGiftcardIcon from '@material-ui/icons/CardGiftcard'
-import AppsIcon from '@material-ui/icons/Apps'
 import green from '@material-ui/core/colors/green'
 import yellow from '@material-ui/core/colors/yellow'
+import marked from 'marked'
+import insane from 'insane'
 
+const store = new window.Store()
+
+const axios = require('axios')
+
+axios.get('https://rayyansaidi.com/download/content.json')
+  .then((response) => {
+    store.set('content', response.data)
+  })
+  .catch((error) => {
+    // handle error
+    console.log(error)
+
+    if (!store.get('content')) {
+      store.set('content', {
+        headers: {
+          'Current Projects': [
+            'RS Office'
+          ],
+          'Completed Projects': [
+            'Holiday Templates',
+            'rayyansaidi.com',
+            'Treasure Hunt'
+          ],
+          'Beta Tests': [
+            'Rayyan Saidi Desktop',
+            'RS Email'
+          ],
+          Blog: [
+
+          ]
+        },
+        content: {
+          'RS Office': "# RS Office\n## A free and open source office suite\nRS office will allow you to create forms on something I'm going to make named RS Survey, send emails using RS Email, write documents in RS Write, code in RS Code, and make slideshows in RS Present. All you will need is a rayyansaidi.com account, which is comming soon along with RS Office. Coding with RS Office won't even take up space on your computer! The email service is super close to done, and you also will soon be able to create forms also.",
+          'Holiday Templates': 'https://holidaytemplates.rayyansaidi.com/',
+          'rayyansaidi.com': 'https://rayyansaidi.com/',
+          'Treasure Hunt': 'https://unpkg.com/rayyansaidi-desktop@2.2.1/src/index.html',
+          'Rayyan Saidi Desktop': "# Rayyan Saidi Desktop\n## The best way to view rayyansaidi.com offline\nRayyan Saidi Desktop  is the best way to view rayyansaidi.com offline. It even comes with some premium fetures that you can't get on the web! Even though you may have this app already, we are still always working on it, and the beta can be downloaded at [git.io/rayyansaidi-desktop](https://git.io/rayyansaidi-desktop)!",
+          'RS Email': "# RS Email\n## The ultimate way to send emails from rayyansaidi.com account\nEven though you send emails from email services, RS Email beets them all with [rayyansaidi.com](https://rayyansaidi.com/) accounts, because RS Email is the ONLY way to send them through your [rayyansaidi.com](https://rayyansaidi.com/) accounts. Even though [rayyansaidi.com](https://rayyansaidi.com/) accounts havn't been invented, I'm releasing the beta, but it's going to be done so you can send an email from [anything you want]@rayyansaidi.com."
+        }
+      })
+    }
+  })
+
+const content = store.get('content')
 const drawerWidth = 250
 
 const useStyles = makeStyles((theme) => ({
@@ -98,109 +127,79 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const listSidebarItem = (text, icon, onclick) => {
+function SidebarItem (props) {
   return (
-    <ListItem onClick={onclick} button key={text}>
-      <ListItemIcon>{icon}</ListItemIcon>
-      <ListItemText primary={text} />
+    <ListItem onClick={props.onClick} button key={props.text}>
+      <ListItemIcon>{props.icon}</ListItemIcon>
+      <ListItemText primary={props.text} />
     </ListItem>
   )
 }
 
-const Content = (props) => {
-    const classes = useStyles()
-    return (
-      <div
-        id={props.id}
-        className={classes.content}
-        style={{ display: props.display || 'none' }}
+function Content (props) {
+  const classes = useStyles()
+  return (
+    <div
+      id={props.id}
+      className={classes.content}
+      style={{ display: props.display || 'none' }}
+    >
+      <Toolbar />
+      <Typography className={classes.h3} variant="h3">
+        {props.title}
+      </Typography>
+      <br />
+      {props.image ? (
+        <img
+          alt=""
+          src={props.image}
+          className={classes.inlineImage}
+        />
+      ) : null}
+      <Typography paragraph className={classes.paragraph} dangerouslySetInnerHTML={props.dangerouslySetInnerHTML}>
+        {props.children}
+      </Typography>
+      <Button
+        variant="contained"
+        color="secondary"
+        disabled={props.previous === 'disabled'}
+        onClick={
+          props.previous !== 'disabled'
+            ? props.previous
+            : () => { }
+        }
       >
-        <Toolbar />
-        <Typography className={classes.h3} variant="h3">
-          {props.title}
-        </Typography>
-        <br />
-        {props.image ? (
-          <img
-            alt=""
-            src={props.image}
-            className={classes.inlineImage}
-          />
-        ) : null}
-        <Typography paragraph className={classes.paragraph}>
-          {props.children}
-        </Typography>
-        <Button
-          variant="contained"
-          color="secondary"
-          disabled={props.previous === 'disabled'}
-          onClick={
-            props.previous !== 'disabled'
-              ? props.previous
-              : () => { }
-          }
-        >
           Previous
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          disabled={props.next === 'disabled'}
-          onClick={
-            props.next !== 'disabled' ? props.next : () => { }
-          }
-          className={classes.next}
-        >
+      </Button>
+      <Button
+        variant="contained"
+        color="primary"
+        disabled={props.next === 'disabled'}
+        onClick={
+          props.next !== 'disabled' ? props.next : () => { }
+        }
+        className={classes.next}
+      >
           Next
-        </Button>
-      </div>
-    )
-  }
+      </Button>
+    </div>
+  )
+}
 
+function camelize (str) {
+  return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
+    if (+match === 0) return '' // or if (/\s+/.test(match)) for white spaces
+    return index === 0 ? match.toLowerCase() : match.toUpperCase()
+  })
+}
 
-function handleClick(string) {
-  document.getElementById('intro').style.display = 'none'
-  document.getElementById('favorite').style.display = 'none'
-  document.getElementById('pictures').style.display = 'none'
-  document.getElementById('family').style.display = 'none'
-  document.getElementById('treasure').style.display = 'none'
-  document.getElementById('holiday').style.display = 'none'
-  document.getElementById('birthday').style.display = 'none'
-  document.getElementById('father').style.display = 'none'
-  document.getElementById('mother').style.display = 'none'
-  document.getElementById('valentine').style.display = 'none'
+function handleClick (string) {
+  Object.keys(content.headers).map((value) => {
+    return content.headers[value].map((value) => {
+      return document.getElementById(camelize(value)).style.display = 'none'
+    })
+  })
   document.getElementById(string).style.display = 'block'
-}
-
-function sidebarIntroClick() {
-  handleClick('intro')
-}
-function sidebarFavoriteClick() {
-  handleClick('favorite')
-}
-function sidebarPicturesClick() {
-  handleClick('pictures')
-}
-function sidebarFamilyClick() {
-  handleClick('family')
-}
-function sidebarTreasureClick() {
-  handleClick('family')
-}
-function sidebarHolidayClick() {
-  handleClick('holiday')
-}
-function sidebarBirthdayClick() {
-  handleClick('birthday')
-}
-function sidebarFatherClick() {
-  handleClick('father')
-}
-function sidebarMotherClick() {
-  handleClick('mother')
-}
-function sidebarValentineClick() {
-  handleClick('valentine')
 }
 
 export default () => {
@@ -231,66 +230,38 @@ export default () => {
         >
           <Toolbar />
           <div className={classes.drawerContainer}>
-            <Divider />
-            <Typography noWrap className={classes.sidebarHeader}>
-              Current Projects
-            </Typography>
-            <Divider />
             <List>
-              {listSidebarItem('Introduction', <BookIcon />, sidebarIntroClick)}
-              {listSidebarItem(
-                'RS Office',
-                <HomeWorkIcon />,
-                sidebarFavoriteClick
-              )}
-              {listSidebarItem(
-                'Rayyan Saidi Desktop',
-                <AppsIcon />,
-                sidebarPicturesClick
-              )}
+              {Object.keys(content.headers).map((value, index) => {
+                return (
+                  <div key={index}>
+                    <Divider />
+                    <Typography noWrap className={classes.sidebarHeader}>
+                      {value}
+                    </Typography>
+                    <Divider />
+                    <List>
+                      {content.headers[value].map((value, index) => {
+                        return <SidebarItem key={index} text={value} onClick={() => { handleClick(camelize(value)) }} />
+                      })}
+                    </List>
+                  </div>
+                )
+              })}
             </List>
           </div>
         </Drawer>
-        <Content
-          id="intro"
-          display="block"
-          image={rayyan}
-          title="Introduction"
-          previous="disabled"
-          next={sidebarFavoriteClick}
-        >
-          
-        </Content>
-        <Content
-          id="favorite"
-          title="Favorite things to do outside of school"
-          previous={sidebarIntroClick}
-          next={sidebarPicturesClick}
-        >
-          
-        </Content>
-        <Content
-          id="pictures"
-          title="Pictures of Family Members"
-          previous={sidebarFavoriteClick}
-          next={sidebarFamilyClick}
-        >
-
-        </Content>
-        <Content
-          id="family"
-          title="Family Details"
-          previous={sidebarPicturesClick}
-          next="disabled"
-        >
-        
-        </Content>
-        <Content id="treasure"></Content>
-        <Content id="holiday"></Content>
-        <Content id="birthday"></Content>
-        <Content id="mother"></Content>
-        <Content id="father"></Content>
-        <Content id="valentine"></Content>
+        {
+          Object.keys(content.headers).map((value) => {
+            return content.headers[value].map((value) => {
+              return (
+                <Content
+                  id={camelize(value)}
+                  dangerouslySetInnerHTML={{ __html: insane(marked(content.content[value]), { allowedTags: ['p', 'a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }) }}
+                />
+              )
+            })
+          })
+        }
       </MuiThemeProvider>
     </div>
   )

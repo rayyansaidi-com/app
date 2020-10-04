@@ -9,7 +9,8 @@ function createWindow () {
       webPreferences: {
         nodeIntegration: true,
         worldSafeExecuteJavaScript: true,
-        contextIsolation: true
+        preload: __dirname + '/src/preload.js',
+        enableRemoteModule: true
       },
       minHeight: 400,
       minWidth: 700,
@@ -22,7 +23,8 @@ function createWindow () {
       webPreferences: {
         nodeIntegration: true,
         worldSafeExecuteJavaScript: true,
-        contextIsolation: true
+        preload: 'src/preload.js',
+        enableRemoteModule: true
       },
       minHeight: 400,
       minWidth: 700
