@@ -21,7 +21,6 @@ import marked from 'marked'
 import insane from 'insane'
 import defaultContent from './content.json'
 import axios from 'axios'
-import { JSDOM } from 'jsdom'
 
 
 
@@ -134,12 +133,14 @@ function SidebarItem (props) {
 }
 
 function renderContent (value) {
-  const { document } = new JSDOM(`<body>${insane(marked(content.content[value]))}</body>`).window
-  const a = document.getElementsByTagName('a')
-  for (let i = 0; i < a.length; i++) {
-    a[i].setAttribute('target', '_blank');
+  return insane(marked(content.content[value]))
+}
+
+function retargetLinks(query) {
+  const q = document.querySelectorAll(query)
+  for (let i = 0; i < q.length; i++) {
+    q[i].setAttribute('target', '_blank');
   }
-  return document.body.innerHTML
 }
 
 function Content (props) {
@@ -260,7 +261,7 @@ export default () => {
                 <Content
                   id={underscore(value1)}
                   key={parseInt(`${index0}${index1}`)}
-                  dangerouslySetInnerHTML={{__html: renderContent(value1) }}
+                  dangerouslySetInnerHTML={{ __html: renderContent(value1) }}
                   display={index0 === 0 && index1 === 0 ? 'block' : 'none'}
                   previous={0 === index1 ? 'disabled': ()=>{handleClick(underscore(content.headers[value0][index1 - 1]))}}
                   next={content.headers[value0].length -1 === index1 ? 'disabled': ()=>{handleClick(underscore(content.headers[value0][index1 + 1]))}}
@@ -272,4 +273,7 @@ export default () => {
       </MuiThemeProvider>
     </div>
   )
+}
+window.onload = () =>{
+  retargetLinks('a')
 }
