@@ -19,51 +19,48 @@ import green from '@material-ui/core/colors/green'
 import yellow from '@material-ui/core/colors/yellow'
 import marked from 'marked'
 import insane from 'insane'
+import defaultContent from './content.json'
+import axios from 'axios'
+import { JSDOM } from 'jsdom'
 
-const store = new window.Store()
 
-const axios = require('axios')
 
-axios.get('https://rayyansaidi.com/download/content.json')
+axios.get('https://raw.githubusercontent.com/rayyansaidi-com/app/master/src/content.json?rayyansaidi_desktop_random=' + Math.random())
   .then((response) => {
-    store.set('content', response.data)
+    localStorage.setItem('content', JSON.stringify(response.data))
+    window.contentOutput = JSON.stringify(response.data)
   })
   .catch((error) => {
     // handle error
     console.log(error)
 
-    if (!store.get('content')) {
-      store.set('content', {
-        headers: {
-          'Current Projects': [
-            'RS Office'
-          ],
-          'Completed Projects': [
-            'Holiday Templates',
-            'rayyansaidi.com',
-            'Treasure Hunt'
-          ],
-          'Beta Tests': [
-            'Rayyan Saidi Desktop',
-            'RS Email'
-          ],
-          Blog: [
-
-          ]
-        },
-        content: {
-          'RS Office': "# RS Office\n## A free and open source office suite\nRS office will allow you to create forms on something I'm going to make named RS Survey, send emails using RS Email, write documents in RS Write, code in RS Code, and make slideshows in RS Present. All you will need is a rayyansaidi.com account, which is comming soon along with RS Office. Coding with RS Office won't even take up space on your computer! The email service is super close to done, and you also will soon be able to create forms also.",
-          'Holiday Templates': 'https://holidaytemplates.rayyansaidi.com/',
-          'rayyansaidi.com': 'https://rayyansaidi.com/',
-          'Treasure Hunt': 'https://unpkg.com/rayyansaidi-desktop@2.2.1/src/index.html',
-          'Rayyan Saidi Desktop': "# Rayyan Saidi Desktop\n## The best way to view rayyansaidi.com offline\nRayyan Saidi Desktop  is the best way to view rayyansaidi.com offline. It even comes with some premium fetures that you can't get on the web! Even though you may have this app already, we are still always working on it, and the beta can be downloaded at [git.io/rayyansaidi-desktop](https://git.io/rayyansaidi-desktop)!",
-          'RS Email': "# RS Email\n## The ultimate way to send emails from rayyansaidi.com account\nEven though you send emails from email services, RS Email beets them all with [rayyansaidi.com](https://rayyansaidi.com/) accounts, because RS Email is the ONLY way to send them through your [rayyansaidi.com](https://rayyansaidi.com/) accounts. Even though [rayyansaidi.com](https://rayyansaidi.com/) accounts havn't been invented, I'm releasing the beta, but it's going to be done so you can send an email from [anything you want]@rayyansaidi.com."
-        }
-      })
+    if (!localStorage.getItem('content')) {
+      localStorage.setItem('content', JSON.stringify(defaultContent))
+      window.contentOutput = JSON.stringify(defaultContent)
+    } else if (localStorage.getItem('content').version < defaultContent.version) {
+      localStorage.setItem('content', JSON.stringify(defaultContent))
+      window.contentOutput = JSON.stringify(defaultContent)
     }
   })
 
-const content = store.get('content')
+
+const content = parse(localStorage.getItem('content') || window.contentOutput || defaultContent)
+
+function parse(any) {
+  try {
+    if (typeof any === 'string') {
+      return JSON.parse(any)
+    } else if (typeof any === 'object') {
+      return any
+    } else {
+      return
+    }
+  } catch (err) {
+    console.error(err)
+    return
+  }
+}
+
 const drawerWidth = 250
 
 const useStyles = makeStyles((theme) => ({
@@ -136,6 +133,15 @@ function SidebarItem (props) {
   )
 }
 
+function renderContent (value) {
+  const { document } = new JSDOM(`<body>${insane(marked(content.content[value]))}</body>`).window
+  const a = document.getElementsByTagName('a')
+  for (let i = 0; i < a.length; i++) {
+    a[i].setAttribute('target', '_blank');
+  }
+  return document.body.innerHTML
+}
+
 function Content (props) {
   const classes = useStyles()
   return (
@@ -186,17 +192,14 @@ function Content (props) {
   )
 }
 
-function camelize (str) {
-  return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
-    if (+match === 0) return '' // or if (/\s+/.test(match)) for white spaces
-    return index === 0 ? match.toLowerCase() : match.toUpperCase()
-  })
+function underscore (str) {
+  return str.replace(/ /g, '_').toLowerCase()
 }
 
 function handleClick (string) {
   Object.keys(content.headers).map((value) => {
     return content.headers[value].map((value) => {
-      return document.getElementById(camelize(value)).style.display = 'none'
+      return document.getElementById(underscore(value)).style.display = 'none'
     })
   })
   document.getElementById(string).style.display = 'block'
@@ -241,7 +244,7 @@ export default () => {
                     <Divider />
                     <List>
                       {content.headers[value].map((value, index) => {
-                        return <SidebarItem key={index} text={value} onClick={() => { handleClick(camelize(value)) }} />
+                        return <SidebarItem key={index} text={value} onClick={() => { handleClick(underscore(value)) }} />
                       })}
                     </List>
                   </div>
@@ -251,12 +254,16 @@ export default () => {
           </div>
         </Drawer>
         {
-          Object.keys(content.headers).map((value) => {
-            return content.headers[value].map((value) => {
+          Object.keys(content.headers).map((value0, index0) => {
+            return content.headers[value0].map((value1, index1) => {
               return (
                 <Content
-                  id={camelize(value)}
-                  dangerouslySetInnerHTML={{ __html: insane(marked(content.content[value]), { allowedTags: ['p', 'a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }) }}
+                  id={underscore(value1)}
+                  key={parseInt(`${index0}${index1}`)}
+                  dangerouslySetInnerHTML={{__html: renderContent(value1) }}
+                  display={index0 === 0 && index1 === 0 ? 'block' : 'none'}
+                  previous={0 === index1 ? 'disabled': ()=>{handleClick(underscore(content.headers[value0][index1 - 1]))}}
+                  next={content.headers[value0].length -1 === index1 ? 'disabled': ()=>{handleClick(underscore(content.headers[value0][index1 + 1]))}}
                 />
               )
             })
