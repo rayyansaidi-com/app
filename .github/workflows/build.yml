@@ -1,0 +1,52 @@
+on:
+  workflow_dispatch:
+jobs:
+  Ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.18.3
+      - name: Install
+        run: yarn install
+      - name: Build
+        run: yarn build:linux
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: snap
+          path: dist/*.snap
+  Windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.18.3
+      - name: Install
+        run: yarn install
+      - name: Build
+        run: yarn build:win
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: exe
+          path: dist/*.exe
+  MacOS:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.18.3
+      - name: Install
+        run: yarn install
+      - name: Build
+        run: yarn build:mac
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: dmg
+          path: dist/*.dmg
