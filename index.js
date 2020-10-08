@@ -10,7 +10,7 @@ function createWindow () {
         nodeIntegration: false,
         contextIsolation: true,
         worldSafeExecuteJavaScript: true,
-        enableRemoteModule: false,
+        enableRemoteModule: false
       },
       minHeight: 400,
       minWidth: 700,
@@ -24,7 +24,7 @@ function createWindow () {
         nodeIntegration: false,
         contextIsolation: true,
         worldSafeExecuteJavaScript: true,
-        enableRemoteModule: false,
+        enableRemoteModule: false
       },
       minHeight: 400,
       minWidth: 700
@@ -34,7 +34,7 @@ function createWindow () {
   process.env.NODE_ENV === 'development' ? win.loadURL('http://localhost:3000') : win.loadFile('build/index.html')
 
   // Open the DevTools.
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished

@@ -1,0 +1,30 @@
+.root {
+  display: flex!important;
+}
+.appBar {
+  z-index: 10000!important;
+}
+.drawer {
+  width: 250px!important;
+  flex-shrink: 0!important;
+}
+.drawerPaper {
+  width: 250px!important
+}
+.drawerContainer {
+  overflow: auto!important
+}
+.headerText {
+  font-weight: 600!important
+}
+.toolbar {
+  -webkit-app-region: drag!important;
+  justify-content: center!important
+}
+.sidebarHeader {
+  margin-left: 30px!important;
+  font-size: 20px!important;
+  font-weight: 600px!important;
+  margin-bottom: 10px!important;
+  margin-top: 15px!important
+}
