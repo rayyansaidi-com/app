@@ -1,12 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import Toolbar from '@material-ui/core/Toolbar'
-import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
+import { Button, Toolbar } from './components'
 
-const ContentNextButton = styled(Button)`float: right; margin-right: 5px;`
-const ContentContainer = styled.div`flex-grow: 1; padding: 24px; display: ${props => {return (props.display || 'none')}};`
-const ContentParagraph = styled(Typography)`margin: 20px; margin-top: 25px; font-size: 18px;`
+const ContentContainer = styled.div`flex-grow: 1; padding: 24px; display: ${props => {return (props.display || 'none')}};margin-left:250px;`
+const ContentParagraph = styled.p`margin: 20px; margin-top: 25px; font-size: 18px; font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;`
 
 function Content (props) {
   return (
@@ -17,27 +14,26 @@ function Content (props) {
       <Toolbar />
       <br />
       <ContentParagraph
-        paragraph
         dangerouslySetInnerHTML={props.dangerouslySetInnerHTML}
       >
         {props.children}
       </ContentParagraph>
       <Button
-        variant="contained"
-        color="secondary"
+        secondary
         disabled={props.previous === 'disabled'}
         onClick={props.previous !== 'disabled' ? props.previous : () => {}}
       >
         Previous
       </Button>
-      <ContentNextButton
+      <Button
         variant="contained"
         color="primary"
         disabled={props.next === 'disabled'}
         onClick={props.next !== 'disabled' ? props.next : () => {}}
+        next
       >
         Next
-      </ContentNextButton>
+      </Button>
     </ContentContainer>
   )
 }

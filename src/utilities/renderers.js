@@ -1,8 +1,7 @@
 import React from 'react'
-import { SidebarItem, underscore, handleClick, parseContent } from './index'
-import Divider from '@material-ui/core/Divider'
-import List from '@material-ui/core/List'
-import Typography from '@material-ui/core/Typography'
+import { underscore, handleClick, parseContent, encodeHTML } from './index'
+import { Divider } from '../components'
+import { Typography, SidebarItem, List } from '../components'
 import Content from '../Content'
 
 function renderSidebar(content) {
@@ -10,7 +9,7 @@ function renderSidebar(content) {
     return (
       <div key={index0}>
         <Divider />
-        <Typography noWrap className="sidebarHeader">
+        <Typography noWrap h6 className="sidebarHeader">
           {value0}
         </Typography>
         <Divider />
@@ -19,11 +18,12 @@ function renderSidebar(content) {
             return (
               <SidebarItem
                 key={index1}
-                text={value1}
                 onClick={() => {
                   handleClick(underscore(value1), content)
                 }}
-              />
+              >
+                {encodeHTML(value1)}
+              </SidebarItem>
             )
           })}
         </List>

@@ -3,9 +3,6 @@ import React from 'react'
 import insane from 'insane'
 import axios from 'axios'
 import defaultContent from '../content.json'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
 
 function parseJSON (any) {
   try {
@@ -75,13 +72,10 @@ function getContent() {
   })
 }
 
-function SidebarItem (props) {
-  return (
-    <ListItem onClick={props.onClick} button key={props.text}>
-      <ListItemIcon>{props.icon}</ListItemIcon>
-      <ListItemText primary={props.text} />
-    </ListItem>
-  )
+function encodeHTML (string) {
+  return string.replace(/[\u00A0-\u9999<>&]/g, function(i) {
+    return '&#' + i.charCodeAt(0) + ';';
+ });
 }
 
-export { parseJSON, parseContent, retargetLinks, underscore, handleClick, getContent, SidebarItem }
+export { parseJSON, parseContent, retargetLinks, underscore, handleClick, getContent, encodeHTML }
