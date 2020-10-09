@@ -1,5 +1,4 @@
 import marked from 'marked'
-import React from 'react'
 import insane from 'insane'
 import axios from 'axios'
 import defaultContent from '../content.json'
@@ -44,38 +43,38 @@ function handleClick (string, content) {
   document.getElementById(string).style.display = 'block'
 }
 
-function getContent() {
+function getContent () {
   axios
-  .get(
-    'https://raw.githubusercontent.com/rayyansaidi-com/app/master/src/content.json?rayyan_saidi_desktop_random=' +
+    .get(
+      'https://raw.githubusercontent.com/rayyansaidi-com/app/master/src/content.json?rayyan_saidi_desktop_random=' +
       Math.random()
-  )
-  .then((response) => {
-    localStorage.setItem('content', JSON.stringify(response.data))
-    return JSON.stringify(response.data)
-  })
-  .catch((error) => {
+    )
+    .then((response) => {
+      localStorage.setItem('content', JSON.stringify(response.data))
+      return JSON.stringify(response.data)
+    })
+    .catch((error) => {
     // handle error
-    console.log(error)
+      console.log(error)
 
-    if (!localStorage.getItem('content')) {
-      localStorage.setItem('content', JSON.stringify(defaultContent))
-      return JSON.stringify(defaultContent)
-    } else if (
-      localStorage.getItem('content').version < defaultContent.version
-    ) {
-      localStorage.setItem('content', JSON.stringify(defaultContent))
-      return JSON.stringify(defaultContent)
-    } else {
-      return JSON.stringify(localStorage.getItem('content'))
-    }
-  })
+      if (!localStorage.getItem('content')) {
+        localStorage.setItem('content', JSON.stringify(defaultContent))
+        return JSON.stringify(defaultContent)
+      } else if (
+        localStorage.getItem('content').version < defaultContent.version
+      ) {
+        localStorage.setItem('content', JSON.stringify(defaultContent))
+        return JSON.stringify(defaultContent)
+      } else {
+        return JSON.stringify(localStorage.getItem('content'))
+      }
+    })
 }
 
 function encodeHTML (string) {
-  return string.replace(/[\u00A0-\u9999<>&]/g, function(i) {
-    return '&#' + i.charCodeAt(0) + ';';
- });
+  return string.replace(/[\u00A0-\u9999<>&]/g, function (i) {
+    return '&#' + i.charCodeAt(0) + ';'
+  })
 }
 
 export { parseJSON, parseContent, retargetLinks, underscore, handleClick, getContent, encodeHTML }

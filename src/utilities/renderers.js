@@ -1,10 +1,10 @@
 import React from 'react'
 import { underscore, handleClick, parseContent, encodeHTML } from './index'
-import { Divider } from '../components'
-import { Typography, SidebarItem, List } from '../components'
+import { Divider, Typography, SidebarItem, List } from '../components'
+
 import Content from '../Content'
 
-function renderSidebar(content) {
+function renderSidebar (content) {
   return Object.keys(content.headers).map((value0, index0) => {
     return (
       <div key={index0}>
@@ -32,7 +32,7 @@ function renderSidebar(content) {
   })
 }
 
-function renderContent(content) {
+function renderContent (content) {
   return Object.keys(content.headers).map((value0, index0) => {
     return content.headers[value0].map((value1, index1) => {
       return (

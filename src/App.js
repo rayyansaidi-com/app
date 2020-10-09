@@ -4,14 +4,14 @@ import { Typography, List, Toolbar, AppBar } from './components'
 import defaultContent from './content.json'
 import { parseJSON, retargetLinks, getContent } from './utilities'
 import { renderSidebar, renderContent } from './utilities/renderers'
-import "fontsource-roboto"
+import 'fontsource-roboto'
 import colors from './colors'
 
 const contentOutput = getContent()
 
 const content = parseJSON(contentOutput || defaultContent)
 
-function App() {
+function App () {
   return (
     <div className="root">
       <AppBar position="fixed" className="appBar">
@@ -27,7 +27,7 @@ function App() {
         classes={{
           paper: 'drawerPaper'
         }}
-        style={{backgroundColor: '#fff', border: '1px solid rgba(0, 0, 0, 0.12)', height: '100vh', overflowY: 'auto', position:"fixed",top:0,left:0}}
+        style={{ backgroundColor: '#fff', border: '1px solid rgba(0, 0, 0, 0.12)', height: '100vh', overflowY: 'auto', position: 'fixed', top: 0, left: 0 }}
       >
         <Toolbar />
         <div className="drawerContainer">
