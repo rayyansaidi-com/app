@@ -1,0 +1,22 @@
+name: Bump version in src/content.json
+on:
+  push:
+    branches: [ master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Bump version in src/content.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if git diff --name-only ${GITHUB_SHA}~1 ${GITHUB_SHA} | grep src/content.json; then
+              jq '.version += 1' src/content.json > src/content.json.tmp
+              mv src/content.json.tmp src/content.json
+              git config --local user.name "$(git show -s --format='%an' ${GITHUB_SHA})"
+              git config --local user.email "$(git show -s --format='%ae' ${GITHUB_SHA})"
+              git add src/content.json
+              git commit -m "Bump version in src/content.json"
+              git push https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git master
+          fi
