@@ -11,6 +11,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          git show --name-only --oneline ${GITHUB_SHA}
           if git show --name-only --oneline ${GITHUB_SHA} | grep "src/content.json"; then
               jq '.version += 1' src/content.json > src/content.json.tmp
               mv src/content.json.tmp src/content.json
