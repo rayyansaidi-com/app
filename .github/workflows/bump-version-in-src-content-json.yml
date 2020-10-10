@@ -7,11 +7,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 3
       - name: Bump version in src/content.json
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if curl -fsS https://api.github.com/repos/rayyansaidi-com/app/commits/${GITHUB_SHA} | jq '.files[].filename' | grep src/content.json; then
+          if git show --oneline --name-only ${GITHUB_SHA} | grep src/content.json; then
               jq '.version += 1' src/content.json > src/content.json.tmp
               mv src/content.json.tmp src/content.json
               git config --local user.name "$(git show -s --format='%an' ${GITHUB_SHA})"
