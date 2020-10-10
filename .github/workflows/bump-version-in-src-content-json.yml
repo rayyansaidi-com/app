@@ -11,6 +11,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          sleep 5
           git pull https://github.com/${GITHUB_REPOSITORY}.git master
           if git diff --name-only ${GITHUB_SHA}~1 ${GITHUB_SHA} | grep src/content.json; then
               jq '.version += 1' src/content.json > src/content.json.tmp
