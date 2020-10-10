@@ -11,6 +11,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          git pull origin master
           if git diff --name-only ${GITHUB_SHA}~1 ${GITHUB_SHA} | grep src/content.json; then
               jq '.version += 1' src/content.json > src/content.json.tmp
               mv src/content.json.tmp src/content.json
