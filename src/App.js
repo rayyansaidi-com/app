@@ -1,11 +1,12 @@
 import React from 'react'
 import './App.css'
-import { Typography, List, Toolbar, AppBar } from './components'
+import { Typography, List, Toolbar, AppBar, SidebarItem } from './components'
 import defaultContent from './content.json'
 import { parseJSON, retargetLinks, getContent } from './utilities'
 import { renderSidebar, renderContent } from './utilities/renderers'
 import 'fontsource-roboto'
 import colors from './colors'
+import Preferences from './Preferences'
 
 const contentOutput = getContent()
 
@@ -33,10 +34,19 @@ function App () {
         <div className="drawerContainer">
           <List>
             {renderSidebar(content)}
+            {/* <SidebarItem
+              onClick={() => {
+                document.getElementById('prefs').style.display = 'block'
+              }}
+              style={{position:"fixed", bottom:10, left:0, width: 250}}
+            >
+            <Typography h6><b>Preferences</b></Typography>
+          </SidebarItem> */}
           </List>
         </div>
       </div>
       {renderContent(content)}
+      <Preferences id="prefs" />
     </div>
   )
 }
