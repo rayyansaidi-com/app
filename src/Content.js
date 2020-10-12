@@ -4,7 +4,7 @@ import { Button, Toolbar } from './components'
 import PropTypes from 'prop-types'
 
 const ContentContainer = styled.div`flex-grow: 1; padding: 24px; display: ${props => { return (props.display || 'none') }};margin-left:250px;`
-const ContentParagraph = styled.p`margin: 20px; margin-top: 25px; font-size: 18px; font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;`
+const ContentParagraph = styled.div`margin: 20px; margin-top: 25px; font-size: 18px; font-family: Roboto, sans-serif;`
 
 function Content (props) {
   return (

@@ -24,10 +24,11 @@ const Button = styled.button`
   ${props => props.secondary && css`background-color: ${colors.secondary[500]};`}
   ${props => props.disabled && css`background-color: #dcdcdc; box-shadow: none; color: #a0a0a0;`}
   ${props => props.next && css`float: right; margin-right: 5px;`}
+  cursor:pointer;
 `
 
 const Typography = styled.div`
-  font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: Roboto, sans-serif;
   ${props => props.h6 && css`font-size: 1.25rem;`}
   ${props => props.h5 && css`font-size: 1.5rem;`}
   ${props => props.h4 && css`font-size: 2.125rem;`}
@@ -54,6 +55,7 @@ const SidebarItem = styled.div`
     background-color: #bdbdbd;
   }
   transition: 0.2s;
+  cursor:pointer;
 `
 
 const List = styled.ul`
