@@ -42,7 +42,7 @@ function Content (props) {
 Content.propTypes = {
   id: PropTypes.string,
   display: PropTypes.string,
-  dangerouslySetInnerHTML: PropTypes.string,
+  dangerouslySetInnerHTML: PropTypes.object,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
