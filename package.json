@@ -7,7 +7,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "fontsource-roboto": "^3.0.3",
     "insane": "^2.6.2",
     "marked": "^1.2.0",
